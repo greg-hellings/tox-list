@@ -22,6 +22,7 @@ jobs:
           tox-args: -c tests/lint_only
         id: lint-only
       - name: Verify output is good
+        shell: bash
         run: |
           if [ '${{ steps.lint-only.outputs.tox-envs }}' != '["lint"]' ];
           then
