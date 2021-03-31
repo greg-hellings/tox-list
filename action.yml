@@ -17,15 +17,17 @@ runs:
       id: envs
       shell: bash
       run: |
-        set -e -o pipefail
+        set -ex -o pipefail
         if ! command -v tox;
         then
           # Destination for the virtualenv
           if [ "${RUNNER_OS}" == "Windows" ];
           then
             venv="${{ github.action_path }}\\venv"
+            activate="${venv}\\bin\\activate"
           else
             venv="${{ github.action_path }}/venv"
+            activate="${venv}/bin/activate"
           fi
 
           # Create the virtualenv
@@ -34,9 +36,9 @@ runs:
           # Activate the virtualenv
           if [ "${RUNNER_OS}" == "Windows" ];
           then
-            ls -lR "${venv}"
+            ls -R "${venv}"
           else
-            source "${venv}/bin/activate"
+            source "${activate}"
           fi
 
           # Install tox
