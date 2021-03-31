@@ -30,6 +30,7 @@ runs:
 
           # Activate the virtualenv
           if [ "${RUNNER_OS}" == "Windows" ];
+          then
             ls "${{ github.action_path }}/venv/bin/"
           else
             source ${{ github.action_path }}/venv/bin/activate
