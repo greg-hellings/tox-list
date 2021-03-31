@@ -20,20 +20,23 @@ runs:
         set -e -o pipefail
         if ! command -v tox;
         then
-          # Create the virtualenv
-          if [ "${RUNNER_OS}" == "macOS" ];
+          # Destination for the virtualenv
+          if [ "${RUNNER_OS}" == "Windows" ];
           then
-            python3 -m venv "${{ github.action_path }}/venv"
+            venv="${{ github.action_path }}\\venv"
           else
-            python -m venv "${{ github.action_path }}/venv"
+            venv="${{ github.action_path }}/venv"
           fi
+
+          # Create the virtualenv
+          python3 -m venv "${venv}"
 
           # Activate the virtualenv
           if [ "${RUNNER_OS}" == "Windows" ];
           then
-            ls "${{ github.action_path }}/venv/bin/"
+            ls -lR "${venv}"
           else
-            source "${{ github.action_path }}/venv/bin/activate"
+            source "${venv}/bin/activate"
           fi
 
           # Install tox
