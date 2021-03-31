@@ -22,7 +22,7 @@ jobs:
         id: lint-only
       - name: Verify output is good
         run: |
-          if [ "${{ steps.lint-only.outputs.tox-envs }}" != '["lint"]' ];
+          if [ '${{ steps.lint-only.outputs.tox-envs }}' != '["lint"]' ];
           then
             exit 1
           fi
