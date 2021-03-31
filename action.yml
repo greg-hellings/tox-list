@@ -24,27 +24,19 @@ runs:
           if [ "${RUNNER_OS}" == "Windows" ];
           then
             venv="${{ github.action_path }}\\venv"
-            activate="${venv}\\bin\\activate"
+            activate="${venv}\\Scripts\\activate"
+            prog="python"
           else
             venv="${{ github.action_path }}/venv"
             activate="${venv}/bin/activate"
+            prog="python3"
           fi
 
           # Create the virtualenv
-          if [ "${RUNNER_OS}" == "Windows" ];
-          then
-            python -m venv "${venv}"
-          else
-            python3 -m venv "${venv}"
-          fi
+          "${prog}" -m venv "${venv}"
 
           # Activate the virtualenv
-          if [ "${RUNNER_OS}" == "Windows" ];
-          then
-            ls -R "${venv}"
-          else
-            source "${activate}"
-          fi
+          source "${activate}"
 
           # Install tox
           python -m pip install tox
