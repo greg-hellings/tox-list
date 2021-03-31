@@ -31,7 +31,12 @@ runs:
           fi
 
           # Create the virtualenv
-          python3 -m venv "${venv}"
+          if [ "${RUNNER_OS}" == "Windows" ];
+          then
+            python -m venv "${venv}"
+          else
+            python3 -m venv "${venv}"
+          fi
 
           # Activate the virtualenv
           if [ "${RUNNER_OS}" == "Windows" ];
