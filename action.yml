@@ -16,7 +16,7 @@ runs:
     - name: Run tox with args and get output
       shell: bash
       run: |
-        set -ex -o pipefail
+        set -e -o pipefail
         if ! command -v tox;
         then
           python -m venv ${{ github.action_path }}/venv
