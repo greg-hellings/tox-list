@@ -14,6 +14,7 @@ runs:
   using: composite
   steps:
     - name: Run tox with args and get output
+      shell: bash
       run: |
         set -ex -o pipefail
         envs="$(tox -ql ${{ inputs.tox-args }} | python -c 'import sys; import json; print(json.dumps(sys.stdin.read().strip().split("\n")))')"
