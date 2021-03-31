@@ -1,0 +1,20 @@
+name: Tox List
+description: >-
+  Runs 'tox -l' on your repository and sets the output to a JSON list of environments
+inputs:
+  tox-args:
+    descrition: Additional CLI arguments to tox
+    required: true
+    default: ''
+outputs:
+  tox-envs:
+    description: A JSON list of tox environments
+    value: ${{ steps.envs.outputs.envs }}
+runs:
+  using: composite
+  steps:
+    - name: Run tox with args and get output
+      run: |
+        set -ex -o pipefail
+        envs="$(tox -ql ${{ inputs.tox-args }} | python -c 'import sys; import json; print(json.dumps(sys.stdin.read().strip().split("\n")))')"
+        echo "::set-output name=envs::${envs}"
