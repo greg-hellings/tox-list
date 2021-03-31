@@ -1,0 +1,28 @@
+name: Test that it works
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: Test that code works properly
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - windows-latest
+          - ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          tox-args: -c tests/lint_only
+        id: lint-only
+      - name: Verify output is good
+        run: |
+          if [ "${{ steps.lint-only.outputs.envs }}" != '["lint"]' ];
+          then
+            exit 1
+          fi
