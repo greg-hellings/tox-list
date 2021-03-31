@@ -17,5 +17,6 @@ runs:
       shell: bash
       run: |
         set -ex -o pipefail
+        python -m pip install tox
         envs="$(tox -ql ${{ inputs.tox-args }} | python -c 'import sys; import json; print(json.dumps(sys.stdin.read().strip().split("\n")))')"
         echo "::set-output name=envs::${envs}"
