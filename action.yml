@@ -23,9 +23,9 @@ runs:
           # Create the virtualenv
           if [ "${RUNNER_OS}" == "macOS" ];
           then
-            virtualenv "${{ github.action_path }}/venv"
+            python3 -m venv "${{ github.action_path }}/venv"
           else
-            python -m venv ${{ github.action_path }}/venv
+            python -m venv "${{ github.action_path }}/venv"
           fi
 
           # Activate the virtualenv
@@ -33,7 +33,7 @@ runs:
           then
             ls "${{ github.action_path }}/venv/bin/"
           else
-            source ${{ github.action_path }}/venv/bin/activate
+            source "${{ github.action_path }}/venv/bin/activate"
           fi
 
           # Install tox
