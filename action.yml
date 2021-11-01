@@ -18,20 +18,20 @@ runs:
       shell: bash
       run: |
         set -ex -o pipefail
+        # Destination for the virtualenv
+        if [ "${RUNNER_OS}" == "Windows" ];
+        then
+          venv="${{ github.action_path }}\\venv"
+          activate="${venv}\\Scripts\\activate"
+          prog="python"
+        else
+          venv="${{ github.action_path }}/venv"
+          activate="${venv}/bin/activate"
+          prog="python3"
+        fi
+        # Ensure that tox exists
         if ! command -v tox;
         then
-          # Destination for the virtualenv
-          if [ "${RUNNER_OS}" == "Windows" ];
-          then
-            venv="${{ github.action_path }}\\venv"
-            activate="${venv}\\Scripts\\activate"
-            prog="python"
-          else
-            venv="${{ github.action_path }}/venv"
-            activate="${venv}/bin/activate"
-            prog="python3"
-          fi
-
           # Create the virtualenv
           "${prog}" -m venv "${venv}"
 
