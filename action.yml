@@ -41,5 +41,5 @@ runs:
           # Install tox
           python -m pip install tox
         fi
-        envs="$(tox -ql ${{ inputs.tox-args }} 2>/dev/null | python -c 'import sys; import json; print(json.dumps(sys.stdin.read().strip().split("\n")))')"
+        envs="$(tox -ql ${{ inputs.tox-args }} 2>/dev/null | "${prog}" "${{ github.action_path }}/do_the_splits.py")"
         echo "::set-output name=envs::${envs}"
